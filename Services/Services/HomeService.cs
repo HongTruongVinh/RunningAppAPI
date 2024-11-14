@@ -10,8 +10,6 @@ namespace RunningAppServices.Services
 {
     public class HomeService : IHomeService
     {
-
-
         public async Task<HomeModel> GetDataForHome(string? UserId)
         {
             HomeModel returnValue = new HomeModel();

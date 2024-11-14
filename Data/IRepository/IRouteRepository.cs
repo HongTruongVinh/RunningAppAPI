@@ -1,4 +1,5 @@
 ﻿using RunningAppData.Entities;
+using RunningAppData.GenericRepository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,9 +8,8 @@ using System.Threading.Tasks;
 
 namespace RunningAppData.IRepository
 {
-    public interface IRouteRepository
+    public interface IRouteRepository : IGenericRepository<Route>
     {
-        Route GetById(string id);
-        Task<Route> GetByIdAsync(string id);
+
     }
 }

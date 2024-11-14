@@ -1,6 +1,7 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Driver;
 using RunningAppData.Entities;
+using SharpCompress.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,21 +36,45 @@ namespace RunningAppData.GenericRepository
             return await _collection.Find(filter).ToListAsync();
         }
 
-        public async Task AddAsync(T entity)
+        public async Task<bool> AddAsync(T entity)
         {
-            await _collection.InsertOneAsync(entity);
+            try
+            {
+                await _collection.InsertOneAsync(entity);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
 
-        public async Task UpdateAsync(string id, T entity)
+        public async Task<bool> UpdateAsync(string id, T entity)
         {
-            var filter = Builders<T>.Filter.Eq("_id", ObjectId.Parse(id));
-            await _collection.ReplaceOneAsync(filter, entity);
+            try
+            {
+                var filter = Builders<T>.Filter.Eq("_id", ObjectId.Parse(id));
+                await _collection.ReplaceOneAsync(filter, entity);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
 
-        public async Task DeleteAsync(string id)
+        public async Task<bool> DeleteAsync(string id)
         {
-            var filter = Builders<T>.Filter.Eq("_id", ObjectId.Parse(id));
-            await _collection.DeleteOneAsync(filter);
+            try
+            {
+                var filter = Builders<T>.Filter.Eq("_id", ObjectId.Parse(id));
+                await _collection.DeleteOneAsync(filter);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
     }
 }

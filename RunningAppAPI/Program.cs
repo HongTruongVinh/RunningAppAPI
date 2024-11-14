@@ -2,7 +2,12 @@
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 using RunningAppData.GenericRepository;
+using RunningAppData.IRepository;
+using RunningAppData.Repository;
 using RunningAppModel.Base;
+using RunningAppServices.CommonFunction;
+using RunningAppServices.IServices;
+using RunningAppServices.Services;
 
 namespace RunningAppAPI
 {
@@ -31,8 +36,11 @@ namespace RunningAppAPI
 
             #region Add services to the container.
             builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
-            builder.Services.AddScoped<IGenericRepositoryFactory, GenericRepositoryFactory>();
+            builder.Services.AddScoped<IUserRepository, UserRepository>();
+            builder.Services.AddScoped<IUserService, UserService>();
 
+
+            builder.Services.AddScoped<InitialDataService, InitialDataService>();
             #endregion
 
 

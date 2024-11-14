@@ -7,10 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="CommonFunction\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\Data\RunningAppData.csproj" />
     <ProjectReference Include="..\Model\RunningAppModel.csproj" />
   </ItemGroup>
