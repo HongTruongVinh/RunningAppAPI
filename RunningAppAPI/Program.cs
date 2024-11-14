@@ -36,9 +36,20 @@ namespace RunningAppAPI
 
             #region Add services to the container.
             builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+            builder.Services.AddScoped<IAchievementsRepository, AchievementsRepository>();
+            builder.Services.AddScoped<IAchievementsService, AchievementsService>();
+            builder.Services.AddScoped<IAvatarRepository, AvatarRepository>();
+            builder.Services.AddScoped<IAvatarService, AvatarService>();
+            builder.Services.AddScoped<IGoalRepository, GoalRepository>();
+            builder.Services.AddScoped<IGoalService, GoalService>();
+            builder.Services.AddScoped<IRoutePointRepository, RoutePointRepository>();
+            builder.Services.AddScoped<IRoutePointService, RoutePointService>();
+            builder.Services.AddScoped<IRouteRepository, RouteRepository>();
+            builder.Services.AddScoped<IRouteService, RouteService>();
             builder.Services.AddScoped<IUserRepository, UserRepository>();
             builder.Services.AddScoped<IUserService, UserService>();
-
+            builder.Services.AddScoped<IWorkoutPlanRepository, WorkoutPlanRepository>();
+            builder.Services.AddScoped<IWorkoutPlanService, WorkoutPlanService>();
 
             builder.Services.AddScoped<InitialDataService, InitialDataService>();
             #endregion

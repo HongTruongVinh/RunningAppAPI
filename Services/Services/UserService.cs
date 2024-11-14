@@ -45,11 +45,8 @@ namespace RunningAppServices.Services
             
             if (existUser == null)
             {
-                var allUser = await _repository.GetAllAsync();
-
                 User dataInsert = new User
                 {
-                    UserId = (allUser.Count() + 1).ToString(),
                     Username = entity.Username,
                     UserHash = entity.UserHash,
                     Age = entity.Age,
@@ -57,7 +54,8 @@ namespace RunningAppServices.Services
                     Height = entity.Height,
                     AvatarId = entity.AvatarId,
                     JoinDate = TimeZoneService.Now().ToString(),
-                    Status = 1
+                    Status = 1,
+                    CreateTime = TimeZoneService.Now().ToString()
                 };
 
                 return await _repository.AddAsync(dataInsert);
@@ -82,10 +80,17 @@ namespace RunningAppServices.Services
                     Height = inforModel.Height,
                     AvatarId = inforModel.AvatarId,
                     JoinDate = TimeZoneService.Now().ToString(),
-                    Status = 1
+                    Status = 1,
+                    CreateTime = TimeZoneService.Now().ToString()
                 };
 
-                return await _repository.AddAsync(dataInsert);
+                await _repository.AddAsync(dataInsert);
+
+                var newUser = _repository.GetUserByUsername(accountModel.Username);
+                newUser.UserId = newUser.Id;
+                await _repository.UpdateAsync(newUser.Id??"", newUser);
+
+                return true;
             }
             else
             {

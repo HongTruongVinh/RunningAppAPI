@@ -16,5 +16,8 @@ namespace RunningAppData.Entities
 
         [BsonElement("Status")]
         public int? Status { get; set; }
+
+        [BsonElement("CreateTime")]
+        public required string CreateTime { get; set; }
     }
 }

@@ -10,6 +10,6 @@ namespace RunningAppData.IRepository
 {
     public interface IRouteRepository : IGenericRepository<Route>
     {
-
+        Task<IEnumerable<Route>> GetRoutesByUserId(string id);
     }
 }

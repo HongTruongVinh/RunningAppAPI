@@ -8,7 +8,7 @@ namespace RunningAppModel.Model
 {
     public class UserInformationModel
     {
-        public string? UserId { get; set; }
+        public required string UserId { get; set; }
 
         public int? Age { get; set; }
 

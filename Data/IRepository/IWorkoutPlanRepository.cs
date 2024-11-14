@@ -10,5 +10,6 @@ namespace RunningAppData.IRepository
 {
     public interface IWorkoutPlanRepository : IGenericRepository<WorkoutPlan>
     {
+        Task<IEnumerable<WorkoutPlan>> GetWorkoutPlansByUserId(string userId);
     }
 }

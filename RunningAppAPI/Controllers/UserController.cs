@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using RunningAppData.Entities;
+using RunningAppModel.Model;
 using RunningAppServices.IServices;
 
 namespace RunningAppAPI.Controllers
@@ -20,6 +21,13 @@ namespace RunningAppAPI.Controllers
         public async Task<User> Get(string username)
         {
             var result = await _userService.GetEntityByUsername(username);
+            return result;
+        }
+
+        [HttpPatch(Name = "UpdateUser")]
+        public async Task<bool> Update(UserInformationModel userInformationModel)
+        {
+            var result = await _userService.UpdateUserInformation(userInformationModel.UserId, userInformationModel);
             return result;
         }
 

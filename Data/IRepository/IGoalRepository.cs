@@ -10,5 +10,6 @@ namespace RunningAppData.IRepository
 {
     public interface IGoalRepository : IGenericRepository<Goal>
     {
+        Task<IEnumerable<Goal>> GetGoalsByUserId(string userId);
     }
 }

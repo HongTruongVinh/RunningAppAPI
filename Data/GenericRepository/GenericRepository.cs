@@ -76,5 +76,24 @@ namespace RunningAppData.GenericRepository
                 return false;
             }
         }
+
+        public async Task<T> GetLastItemAsync()
+        {
+            // Tìm phần tử cuối cùng bằng cách sắp xếp giảm dần theo _id hoặc trường khác phù hợp
+            var result = await _collection
+                .Find(FilterDefinition<T>.Empty)
+                .Sort(Builders<T>.Sort.Descending("_id")) // Sắp xếp giảm dần theo _id
+                .Limit(1) // Giới hạn kết quả là 1 phần tử
+                .FirstOrDefaultAsync();
+
+            return result;
+        }
+
+        public async Task<T> GetByCreateTimeAsync(string createTime)
+        {
+            var filter = Builders<T>.Filter.Eq("CreateTime", createTime);
+            var result = await _collection.Find(filter).FirstOrDefaultAsync();
+            return result;
+        }
     }
 }

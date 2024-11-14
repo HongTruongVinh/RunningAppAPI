@@ -10,5 +10,6 @@ namespace RunningAppData.IRepository
 {
     public interface IAvatarRepository: IGenericRepository<Avatar>
     {
+
     }
 }

@@ -15,6 +15,7 @@ namespace RunningAppData.GenericRepository
         Task<bool> AddAsync(T entity);
         Task<bool> UpdateAsync(string id, T entity);
         Task<bool> DeleteAsync(string id);
-
+        Task<T> GetLastItemAsync();
+        Task<T> GetByCreateTimeAsync(string createTime);
     }
 }

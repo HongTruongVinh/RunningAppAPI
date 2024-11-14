@@ -32,7 +32,8 @@ namespace RunningAppServices.CommonFunction
                     Height = 167,
                     AvatarId = "AvatarId",
                     JoinDate = TimeZoneService.Now().ToString(),
-                    Status = 1
+                    Status = 1,
+                    CreateTime = TimeZoneService.Now().ToString()
                 };
                 _userService.AddEntity(user1);
 

@@ -10,6 +10,6 @@ namespace RunningAppData.IRepository
 {
     public interface IAchievementsRepository : IGenericRepository<Achievements>
     {
-
+        Task<IEnumerable<Achievements>> GetAchievementsByUserId(string userId);
     }
 }
