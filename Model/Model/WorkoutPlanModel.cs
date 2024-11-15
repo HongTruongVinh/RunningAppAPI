@@ -8,6 +8,8 @@ namespace RunningAppModel.Model
 {
     public class WorkoutPlanModel
     {
+        public string? WorkoutPlanId { get; set; }
+
         public required string PlanName { get; set; }
 
         public required string UserId { get; set; }

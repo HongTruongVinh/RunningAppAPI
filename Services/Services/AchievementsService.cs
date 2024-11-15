@@ -21,7 +21,7 @@ namespace RunningAppServices.Services
             _achievementsRepository = achievementsRepository;
         }
 
-        public async Task<List<AchievementsModel>> GetAllAchievementsByUserId(string userId)
+        public async Task<List<AchievementsModel>> GetByUserId(string userId)
         {
             List<AchievementsModel> returnValue = new List<AchievementsModel>();
 
@@ -43,7 +43,7 @@ namespace RunningAppServices.Services
             return returnValue;
         }
 
-        public async Task<AchievementsModel> GetRouteById(string id)
+        public async Task<AchievementsModel> GetById(string id)
         {
             var entity = await _achievementsRepository.GetByIdAsync(id);
 
@@ -59,7 +59,7 @@ namespace RunningAppServices.Services
             return returnRoute;
         }
 
-        public async Task<bool> AddNewRote(AchievementsModel model)
+        public async Task<string> AddNew(AchievementsModel model)
         {
             bool success = false;
 
@@ -85,7 +85,14 @@ namespace RunningAppServices.Services
                 success = await _achievementsRepository.UpdateAsync(newEntity.Id ?? "", newEntity);
             }
 
-            return success;
+            if (!success)
+            {
+                return "error";
+            }
+            else
+            {
+                return newEntity?.AchievementsId??"";
+            }
         }
     }
 }

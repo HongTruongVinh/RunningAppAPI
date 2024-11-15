@@ -11,7 +11,8 @@ namespace RunningAppServices.IServices
     public interface IUserService
     {
         Task<IEnumerable<User>> GetAllUser();
-        Task<User> GetEntityByUsername(string username);
+        Task<UserInformationModel> GetByUsername(string username);
+        Task<UserInformationModel> GetById(string id);
         Task<User> GetEntityById(string id);
         Task<bool> AddEntity(User entity);
         Task<bool> AddNewUser(UserInformationModel inforModel, UserAccountModel accountModel);

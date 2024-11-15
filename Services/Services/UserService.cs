@@ -29,9 +29,36 @@ namespace RunningAppServices.Services
             return await _repository.GetAllAsync();
         }
 
-        public async Task<User> GetEntityByUsername(string username)
+        public async Task<UserInformationModel> GetByUsername(string username)
         {
-            return await _repository.GetUserByUsernameAsync(username);
+            var entity = await _repository.GetUserByUsernameAsync(username);
+
+            UserInformationModel returnValue = new UserInformationModel
+            {
+                UserId = entity.Id ?? "",
+                Age = entity.Age,
+                Weight = entity.Weight,
+                Height = entity.Height,
+                AvatarId = entity.AvatarId,
+            };
+
+            return returnValue;
+        }
+
+        public async Task<UserInformationModel> GetById(string id)
+        {
+            var entity = await _repository.GetByIdAsync(id);
+
+            UserInformationModel returnValue = new UserInformationModel
+            {
+                UserId = entity.Id ?? "",
+                Age = entity.Age,
+                Weight = entity.Weight,
+                Height = entity.Height,
+                AvatarId = entity.AvatarId,
+            };
+
+            return returnValue;
         }
 
         public async Task<User> GetEntityById(string id)

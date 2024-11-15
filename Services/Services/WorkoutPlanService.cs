@@ -22,13 +22,48 @@ namespace RunningAppServices.Services
             _userRepository = userRepository;
         }
 
-        public async Task<IEnumerable<WorkoutPlan>> GetAllWorkoutPlansByUserId(string userId)
+        public async Task<IEnumerable<WorkoutPlanModel>> GetByUserId(string userId)
         {
-            return await _workoutPlanRepository.GetWorkoutPlansByUserId(userId);
+            var entities = await _workoutPlanRepository.GetWorkoutPlansByUserId(userId);
+
+            var returnValue = new List<WorkoutPlanModel>();
+
+            foreach (var e in entities)
+            {
+                var model = new WorkoutPlanModel
+                {
+                    WorkoutPlanId = e.Id,
+                    UserId = e.UserId,
+                    PlanName = e.PlanName,
+                    StartTime = e.StartTime,
+                    EndTime = e.EndTime,
+                    CaloriesBurnt = e.CaloriesBurnt,
+                    Distance = e.Distance,
+                    Step = e.Step
+                };
+
+                returnValue.Add(model);
+            }
+
+            return returnValue;
         }
-        public async Task<WorkoutPlan> GetWorkoutPlanById(string id)
+        public async Task<WorkoutPlanModel> GetById(string id)
         {
-            return await _workoutPlanRepository.GetByIdAsync(id);
+            var e = await _workoutPlanRepository.GetByIdAsync(id);
+
+            var returnValue = new WorkoutPlanModel
+            {
+                WorkoutPlanId = e.Id,
+                UserId = e.UserId,
+                PlanName = e.PlanName,
+                StartTime = e.StartTime,
+                EndTime = e.EndTime,
+                CaloriesBurnt = e.CaloriesBurnt,
+                Distance = e.Distance,
+                Step = e.Step
+            };
+
+            return returnValue;
         }
 
         public async Task<bool> AddNewWorkoutPlan(WorkoutPlanModel model)
@@ -45,6 +80,8 @@ namespace RunningAppServices.Services
                     StartTime = model.StartTime,
                     EndTime = model.EndTime,
                     Distance = model.Distance,
+                    CaloriesBurnt = 95,
+                    Step = 700,
                     Status = 1,
                     CreateTime = TimeZoneService.Now().ToString(),
                 };

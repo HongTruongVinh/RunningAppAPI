@@ -15,13 +15,15 @@ namespace RunningAppServices.Services
     public class RouteService : IRouteService
     {
         private readonly IRouteRepository _routeRepository;
+        private readonly IRoutePointRepository _routePointRepository;
 
-        public RouteService(IRouteRepository routeRepository) 
+        public RouteService(IRouteRepository routeRepository, IRoutePointRepository routePointRepository) 
         {
             _routeRepository = routeRepository;
+            _routePointRepository = routePointRepository;
         }
 
-        public async Task<List<RouteModel>> GetAllRoutesByUserId(string userId)
+        public async Task<List<RouteModel>> GetByUserId(string userId)
         {
             List<RouteModel> returnValue = new List<RouteModel>();
 
@@ -43,9 +45,29 @@ namespace RunningAppServices.Services
             return returnValue;
         }
 
-        public async Task<RouteModel> GetRouteById(string id)
+        public async Task<RouteModel> GetById(string routeId)
         {
-            var entity = await _routeRepository.GetByIdAsync(id);
+            var entity = await _routeRepository.GetByIdAsync(routeId);
+
+            IEnumerable<RoutePoint> routePointsEntities = await _routePointRepository.GetAllAsync();
+
+            routePointsEntities = routePointsEntities.Where(x => x.RouteId == routeId);
+
+            var returnRoutePoints = new List<RoutePointModel>();
+
+            foreach (var routePoint in routePointsEntities)
+            {
+                RoutePointModel routePointModel = new RoutePointModel()
+                {
+                    PointId = routePoint.PointId,
+                    RouteId = routePoint.RouteId,
+                    Latitude = routePoint.Latitude,
+                    Longitude = routePoint.Longitude,
+                    TimeStamp = routePoint.TimeStamp
+                };
+
+                returnRoutePoints.Add(routePointModel);
+            }
 
             RouteModel returnRoute = new RouteModel()
             {
@@ -53,13 +75,14 @@ namespace RunningAppServices.Services
                 UserId = entity.UserId,
                 RouteName = entity.RouteName,
                 Distance = entity.Distance,
-                CreateDate = entity.CreateDate
+                CreateDate = entity.CreateDate,
+                RoutePoints = returnRoutePoints,
             };
 
             return returnRoute;
         }
 
-        public async Task<bool> AddNewRote(RouteModel model)
+        public async Task<string> AddNew(RouteModel model)
         {
             bool success = false;
 
@@ -85,7 +108,14 @@ namespace RunningAppServices.Services
                 success = await _routeRepository.UpdateAsync(newEntity.Id ?? "", newEntity);
             }
 
-            return success;
+            if (!success)
+            {
+                return "error";
+            }
+            else
+            {
+                return newEntity?.RouteId??"";
+            }
         }
 
 

@@ -9,8 +9,8 @@ namespace RunningAppServices.IServices
 {
     public interface IRouteService
     {
-        Task<List<RouteModel>> GetAllRoutesByUserId(string userId);
-        Task<RouteModel> GetRouteById(string id);
-        Task<bool> AddNewRote(RouteModel model);
+        Task<List<RouteModel>> GetByUserId(string userId);
+        Task<RouteModel> GetById(string id);
+        Task<string> AddNew(RouteModel model);
     }
 }

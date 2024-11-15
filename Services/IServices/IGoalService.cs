@@ -11,6 +11,7 @@ namespace RunningAppServices.IServices
     {
         Task<List<GoalModel>> GetAllByUserId(string userId);
         Task<GoalModel> GetById(string id);
-        Task<bool> AddNew(GoalModel model);
+        Task<string> AddNew(GoalModel model);
+        Task<string> Update(GoalModel model);
     }
 }

@@ -9,8 +9,8 @@ namespace RunningAppServices.IServices
 {
     public interface IAchievementsService
     {
-        Task<List<AchievementsModel>> GetAllAchievementsByUserId(string userId);
-        Task<AchievementsModel> GetRouteById(string id);
-        Task<bool> AddNewRote(AchievementsModel model);
+        Task<List<AchievementsModel>> GetByUserId(string userId);
+        Task<AchievementsModel> GetById(string id);
+        Task<string> AddNew(AchievementsModel model);
     }
 }

@@ -8,34 +8,34 @@ namespace RunningAppAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UserController : ControllerBase
+    public class UsersController : ControllerBase
     {
         private readonly IUserService _userService;
 
-        public UserController(IUserService userService)
+        public UsersController(IUserService userService)
         {
             _userService = userService;
         }
 
-        [HttpGet(Name = "GetUserByUsername")]
-        public async Task<User> Get(string username)
+        [HttpGet("{user_id}")]
+        public async Task<UserInformationModel> Get(string user_id)
         {
-            var result = await _userService.GetEntityByUsername(username);
+            var result = await _userService.GetById(user_id);
             return result;
         }
 
-        [HttpPatch(Name = "UpdateUser")]
+        [HttpPut]
         public async Task<bool> Update(UserInformationModel userInformationModel)
         {
             var result = await _userService.UpdateUserInformation(userInformationModel.UserId, userInformationModel);
             return result;
         }
 
-        //[HttpGet(Name = "GetAllUser")]
-        //public async Task<IEnumerable<User>> GetAllUser()
-        //{
-        //    var result = await _userService.GetAllUser();
-        //    return result;
-        //}
+        [HttpGet("GetAllUser")]
+        public async Task<IEnumerable<User>> GetAllUser()
+        {
+            var result = await _userService.GetAllUser();
+            return result;
+        }
     }
 }

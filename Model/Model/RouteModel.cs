@@ -17,5 +17,7 @@ namespace RunningAppModel.Model
         public float? Distance { get; set; }
 
         public string? CreateDate { get; set; }
+
+        public IEnumerable<RoutePointModel>? RoutePoints { get; set; }
     }
 }

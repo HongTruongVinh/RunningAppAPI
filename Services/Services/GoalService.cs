@@ -61,7 +61,7 @@ namespace RunningAppServices.Services
             return returnRoute;
         }
 
-        public async Task<bool> AddNew(GoalModel model)
+        public async Task<string> AddNew(GoalModel model)
         {
             bool success = false;
 
@@ -88,7 +88,47 @@ namespace RunningAppServices.Services
                 success = await _goalRepository.UpdateAsync(newEntity.Id ?? "", newEntity);
             }
 
-            return success;
+            if (!success)
+            {
+                return "error";
+            }
+            else
+            {
+                return newEntity?.GoalId ?? "";
+            }
+        }
+
+        public async Task<string> Update(GoalModel model)
+        {
+            bool success = false;
+
+            var entity = await _goalRepository.GetByIdAsync(model.GoalId ?? "");
+
+            if (entity != null)
+            {
+                Goal dataInsert = new Goal
+                {
+                    GoalId = model.GoalId,
+                    UserId = model.UserId,
+                    GoalType = model.GoalType,
+                    GoalValue = model.GoalValue,
+                    StartDate = model.StartDate,
+                    EndDate = model.EndDate,
+                    Status = 1,
+                    CreateTime = entity.CreateTime
+                };
+
+                success = await _goalRepository.UpdateAsync(entity.Id ?? "", dataInsert);
+            }
+
+            if (!success)
+            {
+                return "error";
+            }
+            else
+            {
+                return "updated";
+            }
         }
     }
 }

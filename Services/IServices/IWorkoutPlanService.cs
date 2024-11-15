@@ -10,8 +10,8 @@ namespace RunningAppServices.IServices
 {
     public interface IWorkoutPlanService
     {
-        Task<IEnumerable<WorkoutPlan>> GetAllWorkoutPlansByUserId(string userId);
-        Task<WorkoutPlan> GetWorkoutPlanById(string id);
+        Task<IEnumerable<WorkoutPlanModel>> GetByUserId(string userId);
+        Task<WorkoutPlanModel> GetById(string id);
         Task<bool> AddNewWorkoutPlan(WorkoutPlanModel model);
         Task<bool> DeleteWorkoutPlan(string id);
     }
